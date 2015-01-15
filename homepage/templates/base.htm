@@ -1,0 +1,73 @@
+## this is the skeleton of all pages on in this app - it defines the basic html tags
+
+## set up a StaticRenderer object to enable the CSS/JS automatic inclusion magic.
+<%! from django_mako_plus.controller import static_files %>
+<%  static_renderer = static_files.StaticRenderer(self) %>
+
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <head>
+    
+    <title>Colonial Heritage Foundation</title>
+    
+    ## add any site-wide scripts or CSS here; for example, jquery:
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+   <!-- 
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+   -->
+  
+    ## render the css with the same name as this page
+    ${ static_renderer.get_template_css(request, context)  }
+
+    <link rel="icon" type="image/x-icon" href="/static/homepage/media/faviconred-02.ico" />
+  
+  </head>
+  <body>
+  
+    <header>
+      <%block name="header">
+        <img src="/static/homepage/media/CHFlogo.png" />
+      </%block>
+    </header>
+
+
+  <div id="wrap">
+    <div id="main" class="container clear-top">
+
+    <div class="col-md-2 left-menu">
+      <%block name="sidebar">
+        <h3>Navigation </h3>
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation"><a href="index">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+          <li role="presentation"><a href="about">About</a></li>
+          <li role="presentation"><a href="contact">Contact</a></li>
+          <li role="presentation"><a href="terms">Terms</a></li>
+        </ul>
+      </%block>
+    </div>
+
+    <div class="col-md-10 center">
+      <%block name="content">
+        Site content goes here in sub-templates.
+      </%block>  
+    </div>
+  </div>
+
+  </div>
+
+  <footer class="footer">
+    <%block name="footer">
+        This is the bottom
+    </%block>
+  </footer>
+  
+    ## render the JS with the same name as this page
+    ${ static_renderer.get_template_js(request, context)  }
+  
+  </body>
+</html>
