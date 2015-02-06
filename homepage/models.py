@@ -14,6 +14,9 @@ class LegalEntity(models.Model):
 	zip = models.IntegerField(max_length=5)
 	email = models.TextField(max_length=100)
 
+class User(AbstractUser):
+	
+
 '''Needs to go before InventoryImage'''
 class Photograph(models.Model):
 	image = models.ImageField()
