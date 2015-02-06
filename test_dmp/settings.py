@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
+AUTH_USER_MODEL = 'homepage.User'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os

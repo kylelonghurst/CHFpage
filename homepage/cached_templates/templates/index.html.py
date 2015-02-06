@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1423177925.25535
+_modified_time = 1423189438.028321
 _enable_loop = True
 _template_filename = '/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/index.html'
 _template_uri = 'index.html'
@@ -28,10 +28,10 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        range = context.get('range', UNDEFINED)
         randnum = context.get('randnum', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
+        range = context.get('range', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content'):
@@ -46,10 +46,10 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        range = context.get('range', UNDEFINED)
         randnum = context.get('randnum', UNDEFINED)
         def content():
             return render_content(context)
+        range = context.get('range', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <div class="content">\n      <h3>Congratulations -- you\'ve successfully created a new django-mako-plus app!</h3>\n      <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page. ')
         __M_writer(str( randnum ))
@@ -67,6 +67,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"68": 62, "27": 0, "36": 1, "46": 3, "54": 3, "55": 6, "56": 6, "57": 18, "58": 19, "59": 20, "60": 20, "61": 20, "62": 23}, "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/index.html", "uri": "index.html", "source_encoding": "ascii"}
+{"source_encoding": "ascii", "line_map": {"68": 62, "27": 0, "36": 1, "46": 3, "54": 3, "55": 6, "56": 6, "57": 18, "58": 19, "59": 20, "60": 20, "61": 20, "62": 23}, "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/index.html", "uri": "index.html"}
 __M_END_METADATA
 """
