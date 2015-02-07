@@ -2,7 +2,7 @@ from django.conf import settings
 from django import forms
 from django_mako_plus.controller import view_function
 from homepage import models as hmod
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.http import HttpRequest
 from django_mako_plus.controller.router import get_renderer
@@ -38,3 +38,11 @@ class LoginForm(forms.Form):
 		if user == None:
 			raise forms.ValidationError('Sorry you can not come in.')
 		return self.cleaned_data
+
+############################################################
+#### Logs the user out in given their credetials
+
+@view_function
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/homepage/index/')

@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1423279021.381326
+_modified_time = 1423279915.296117
 _enable_loop = True
 _template_filename = '/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/users.html'
 _template_uri = 'users.html'
@@ -28,9 +28,9 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
+        users = context.get('users', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        users = context.get('users', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content'):
@@ -45,9 +45,9 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
+        users = context.get('users', UNDEFINED)
         def content():
             return render_content(context)
-        users = context.get('users', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <div class="content">\n      <h3>This is the Users Page</h3>\n      <h4>Users Page</h4>\n    </div>\n\n    <div class="text-right">\n    \t<a href="/homepage/users.create/" class="btn btn-warning">Create New User</a>\n    </div>\n    <table id="users_table" class="table table-striped table-bordered">\n    \t<tr>\n    \t\t<th>ID</th>\n    \t\t<th>Username</th>\n    \t\t<th>First Name</th>\n    \t\t<th>Last Name</th>\n    \t\t<th>Email</th>\n    \t\t<th>Actions</th>\n')
         for user in users:
@@ -72,6 +72,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"uri": "users.html", "source_encoding": "ascii", "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/users.html", "line_map": {"64": 26, "65": 28, "66": 28, "35": 1, "73": 67, "45": 3, "27": 0, "67": 32, "52": 3, "53": 20, "54": 21, "55": 22, "56": 22, "57": 23, "58": 23, "59": 24, "60": 24, "61": 25, "62": 25, "63": 26}}
+{"filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/users.html", "uri": "users.html", "source_encoding": "ascii", "line_map": {"64": 26, "65": 28, "66": 28, "35": 1, "73": 67, "45": 3, "27": 0, "67": 32, "52": 3, "53": 20, "54": 21, "55": 22, "56": 22, "57": 23, "58": 23, "59": 24, "60": 24, "61": 25, "62": 25, "63": 26}}
 __M_END_METADATA
 """
