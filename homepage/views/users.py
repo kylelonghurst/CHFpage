@@ -5,6 +5,7 @@ from homepage import models as hmod
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.http import HttpRequest
 from django_mako_plus.controller.router import get_renderer
+from django.contrib.auth.decorators import permission_required
 
 templater = get_renderer('homepage')
 
@@ -13,6 +14,7 @@ templater = get_renderer('homepage')
 #### Gets all of the users and sends to users.html.
 
 @view_function
+@permission_required('homepage.Admin', login_url='/homepage/permission/')
 def process_request(request):
   params = {}
 
@@ -27,6 +29,7 @@ def process_request(request):
 #### Edits one user
 
 @view_function
+@permission_required('homepage.Manager', login_url='/homepage/permission/')
 def edit(request):
   params = {}
 
@@ -77,6 +80,7 @@ class UserEditForm(forms.Form):
 #### Creates a new user
 
 @view_function
+@permission_required('homepage.Manager', login_url='/homepage/permission/')
 def create(request):
 	user = hmod.User()
 	user.username = ''
@@ -92,6 +96,7 @@ def create(request):
 #### Deletes a new user
 
 @view_function
+@permission_required('homepage.Admin', login_url='/homepage/permission/')
 def delete(request):
 	try:
 		user = hmod.User.objects.get(id=request.urlparams[0])

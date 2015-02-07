@@ -40,4 +40,32 @@ class User(AbstractUser):
 	city = models.TextField(max_length=20, blank = True, null = True)
 	state = models.CharField(max_length=2, blank = True, null = True)
 	zip = models.IntegerField(max_length=5, blank = True, null = True)
-    
+
+class Photograph(models.Model):
+	image = models.TextField(blank = True, null = True)
+	date = models.DateField(blank = True, null = True)
+	place = models.TextField(max_length=100, blank = True, null = True)
+
+class Inventory(models.Model):
+	name = models.TextField(max_length=30, blank = True, null = True)
+	description = models.TextField(max_length=300, blank = True, null = True)
+	value = models.DecimalField(max_digits=10, decimal_places=2, blank = True, null = True)
+
+class Venue(models.Model):
+	name = models.TextField(max_length=50, blank = True, null = True)
+	address = models.TextField(max_length=100, blank = True, null = True)
+	city = models.TextField(max_length=30, blank = True, null = True)
+	state = models.CharField(max_length=2, blank = True, null = True)
+	zip = models.IntegerField(max_length=5, blank = True, null = True)
+	email = models.TextField(max_length=100, blank = True, null = True)
+
+class SaleItem(models.Model):
+	name = models.TextField(max_length=50)
+	description = models.TextField(max_length=300)
+	low_price = models.DecimalField(max_digits=10, decimal_places=2)
+	high_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Area(models.Model):
+	name = models.TextField(max_length=50, blank = True, null = True)
+	description = models.TextField(max_length=300, blank = True, null = True)
+	place_number = models.IntegerField(max_length=4, blank = True, null = True)

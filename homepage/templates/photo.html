@@ -1,0 +1,32 @@
+<%inherit file="base.htm" />
+
+<%block name="content">
+    <div class="content">
+      <h3>This is the Photograph Page</h3>
+      <h4>Photograph Page</h4>
+    </div>
+
+    <div class="text-right">
+    	<a href="/homepage/photo.create/" class="btn btn-warning">Insert New Photograph</a>
+    </div>
+    <table id="photographs_table" class="table table-striped table-bordered">
+    	<tr>
+    		<th>ID</th>
+    		<th>Image</th>
+    		<th>Date</th>
+    		<th>Place</th>
+            <th>Actions</th>
+	    %for photo in photographs:
+	    	<tr>
+	    		<td>${ photo.id }</td>
+	    		<td>${ photo.image }</td>
+	    		<td>${ photo.date }</td>
+	    		<td>${ photo.place }</td>
+	    		<td>
+	    			<a href="/homepage/photo.edit/${ photo.id }/" class="btn btn-xs btn-primary">edit</a>
+	    		</td>
+	    	</tr>
+	    %endfor
+    </table>
+
+</%block>

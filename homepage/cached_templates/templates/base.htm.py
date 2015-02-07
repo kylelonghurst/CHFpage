@@ -4,13 +4,13 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1423272564.322655
+_modified_time = 1423342182.484568
 _enable_loop = True
 _template_filename = '/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/base.htm'
 _template_uri = 'base.htm'
 _source_encoding = 'ascii'
 import os, os.path, re
-_exports = ['footer', 'content', 'header']
+_exports = ['header', 'footer', 'content']
 
 
 from django_mako_plus.controller import static_files 
@@ -19,14 +19,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
+        def header():
+            return render_header(context._locals(__M_locals))
         def footer():
             return render_footer(context._locals(__M_locals))
         self = context.get('self', UNDEFINED)
         request = context.get('request', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        def header():
-            return render_header(context._locals(__M_locals))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -62,13 +62,31 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
+def render_header(context,**pageargs):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def header():
+            return render_header(context)
+        request = context.get('request', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">\n  \n          <div class="navbar-header">\n            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">\n            <span class="sr-only">Toggle navigation</span>\n            <span class="icon-bar"></span>\n            <span class="icon-bar"></span>\n            <span class="icon-bar"></span>\n            </button>\n            <a class="navbar-brand" rel="home" href="/homepage/index/"><img id="logo" src="/static/homepage/media/CHFlogo.png" /></a>\n          </div>\n  \n  <div class="collapse navbar-collapse">\n    \n    <ul class="nav navbar-nav">\n        <li class="dropdown">\n              <a href="#" class="dropdown-toggle" data-toggle="dropdown">CRUD Pages<b class="caret"></b></a>\n              <ul class="dropdown-menu">\n                <li class="divider"></li>\n                <li><a href="/homepage/venue/">Venues</a></li>\n                <li><a href="/homepage/photo/">Photographs</a></li>\n                <li><a href="/homepage/inventory/">Inventory</a></li>\n                <li><a href="/homepage/saleitem/">Sale Item</a></li>\n                <li><a href="/homepage/area/">Area</a></li>\n              </ul>\n            </li>\n      <li class="dropdown">\n              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales Catalog<b class="caret"></b></a>\n              <ul class="dropdown-menu">\n                <li class="divider"></li>\n                <li><a href="#">Artisan Item</a></li>\n                <li><a href="#">Made-To-Order Item</a></li>\n                <li><a href="#">Mass-Produced Item</a></li>\n              </ul>\n            </li>\n      <li class="dropdown">\n              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rentals <b class="caret"></b></a>\n              <ul class="dropdown-menu">\n                <li><a href="#">Wardrobe Item</a></li>\n                <li><a href="#">Other Items</a></li>\n                <li class="divider"></li>\n            <!--\n                <li><a href="#">Separated link</a></li>\n                <li class="divider"></li>\n                <li><a href="#">One more separated link</a></li>\n            -->\n              </ul>\n            </li>\n    </ul>\n  <!--\n    <button type="button" class="btn btn-default navbar-btn">Button</button>\n  -->\n          <!-- <div class="col-sm-4 col-md-4 pull-right">\n           <div class="navbar-text"> -->\n        <ul class="nav navbar-nav pull-right">\n            <li><a href="/homepage/users/">Users</a></li>\n              <form class="navbar-form navbar-left" role="search">\n                <div class="input-group">\n                  <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">\n                  <div class="input-group-btn">\n                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>\n                  </div>\n                </div>\n              </form>\n')
+        if request.user.is_authenticated():
+            __M_writer('              <li class="dropdown">\n                <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account</a>\n                  <ul class="dropdown-menu" role="menu">\n                    <li><a href="/homepage/login.logout_view/">Logout</a></li>\n                  </ul>\n              </li>\n')
+        else:
+            __M_writer('              <li><a href="/homepage/login/">Login</a></li>\n')
+        __M_writer('        </ul>\n\n    \n          </div>\n        </div>\n      ')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_footer(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         def footer():
             return render_footer(context)
         __M_writer = context.writer()
-        __M_writer('\n        This is the bottom\n    ')
+        __M_writer('\n\n    ')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -86,20 +104,8 @@ def render_content(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_header(context,**pageargs):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def header():
-            return render_header(context)
-        __M_writer = context.writer()
-        __M_writer('\n        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">\n  \n          <div class="navbar-header">\n            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">\n            <span class="sr-only">Toggle navigation</span>\n            <span class="icon-bar"></span>\n            <span class="icon-bar"></span>\n            <span class="icon-bar"></span>\n            </button>\n            <a class="navbar-brand" rel="home" href="/homepage/index/"><img id="logo" src="/static/homepage/media/CHFlogo.png" /></a>\n          </div>\n  \n  <div class="collapse navbar-collapse">\n    \n    <ul class="nav navbar-nav">\n      <li><a href="#">Events</a></li>\n      <li class="dropdown">\n              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales Catalog<b class="caret"></b></a>\n              <ul class="dropdown-menu">\n                <li class="divider"></li>\n                <li><a href="#">Artisan Item</a></li>\n                <li><a href="#">Made-To-Order Item</a></li>\n                <li><a href="#">Mass-Produced Item</a></li>\n              </ul>\n            </li>\n      <li class="dropdown">\n              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rentals <b class="caret"></b></a>\n              <ul class="dropdown-menu">\n                <li><a href="#">Wardrobe Item</a></li>\n                <li><a href="#">Other Items</a></li>\n                <li class="divider"></li>\n            <!--\n                <li><a href="#">Separated link</a></li>\n                <li class="divider"></li>\n                <li><a href="#">One more separated link</a></li>\n            -->\n              </ul>\n            </li>\n    </ul>\n  <!--\n    <button type="button" class="btn btn-default navbar-btn">Button</button>\n  -->\n          <div class="col-sm-4 col-md-4 pull-right">\n              <div class="navbar-text"><a href="/homepage/users/">My Account</a></div>\n          <form class="navbar-form" role="search">\n          <div class="input-group">\n            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">\n            <div class="input-group-btn">\n              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>\n            </div>\n          </div>\n          </form>\n          </div>\n    \n          </div>\n        </div>\n      ')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 """
 __M_BEGIN_METADATA
-{"source_encoding": "ascii", "line_map": {"65": 108, "71": 108, "77": 99, "16": 4, "18": 0, "83": 99, "89": 34, "101": 95, "31": 2, "32": 4, "33": 5, "37": 5, "38": 17, "39": 26, "40": 26, "41": 26, "95": 34, "46": 91, "51": 101, "56": 110, "57": 114, "58": 114, "59": 114}, "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/base.htm", "uri": "base.htm"}
+{"line_map": {"65": 34, "72": 34, "73": 99, "74": 100, "75": 106, "76": 107, "77": 109, "16": 4, "18": 0, "83": 131, "89": 131, "101": 122, "31": 2, "32": 4, "33": 5, "37": 5, "38": 17, "39": 26, "40": 26, "41": 26, "95": 122, "107": 101, "46": 114, "51": 124, "56": 133, "57": 137, "58": 137, "59": 137}, "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/base.htm", "uri": "base.htm", "source_encoding": "ascii"}
 __M_END_METADATA
 """
