@@ -43,6 +43,7 @@ def edit(request):
   	})
   if request.method == 'POST':
   	form = UserEditForm(request.POST)
+  	form.userid = user.id
   	if form.is_valid():
   		user.username = form.cleaned_data['username']
   		user.first_name = form.cleaned_data['first_name']
@@ -60,6 +61,14 @@ class UserEditForm(forms.Form):
 	first_name = forms.CharField(required=True, min_length=1, max_length=100)
 	last_name = forms.CharField(required=True, min_length=1, max_length=100)
 	email = forms.EmailField(required=True, min_length=1, max_length=100)
+
+	def clean_username(self):
+		if len(self.cleaned_data['username']) < 6:
+			raise forms.ValidationError('Please enter a username that is at least 6 characters.')
+		users_count = hmod.User.objects.filter(username=self.cleaned_data['username']).exclude(id=self.userid).count()
+		if users_count >= 1:
+			raise forms.ValidationError("This username is already taken.")
+		return self.cleaned_data['username']
 
 ############################################################
 #### Creates a new user

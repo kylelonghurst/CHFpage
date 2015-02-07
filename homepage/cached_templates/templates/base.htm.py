@@ -4,13 +4,13 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1423256168.501534
+_modified_time = 1423272564.322655
 _enable_loop = True
 _template_filename = '/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/base.htm'
 _template_uri = 'base.htm'
 _source_encoding = 'ascii'
 import os, os.path, re
-_exports = ['content', 'footer', 'header']
+_exports = ['footer', 'content', 'header']
 
 
 from django_mako_plus.controller import static_files 
@@ -19,14 +19,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        def content():
-            return render_content(context._locals(__M_locals))
         def footer():
             return render_footer(context._locals(__M_locals))
         self = context.get('self', UNDEFINED)
+        request = context.get('request', UNDEFINED)
+        def content():
+            return render_content(context._locals(__M_locals))
         def header():
             return render_header(context._locals(__M_locals))
-        request = context.get('request', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -62,18 +62,6 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_content(context,**pageargs):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def content():
-            return render_content(context)
-        __M_writer = context.writer()
-        __M_writer('\n        Site content goes here in sub-templates.\n      ')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_footer(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
@@ -81,6 +69,18 @@ def render_footer(context,**pageargs):
             return render_footer(context)
         __M_writer = context.writer()
         __M_writer('\n        This is the bottom\n    ')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
+def render_content(context,**pageargs):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def content():
+            return render_content(context)
+        __M_writer = context.writer()
+        __M_writer('\n        Site content goes here in sub-templates.\n      ')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -100,6 +100,6 @@ def render_header(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"65": 99, "71": 99, "77": 108, "16": 4, "18": 0, "83": 108, "89": 34, "101": 95, "31": 2, "32": 4, "33": 5, "37": 5, "38": 17, "39": 26, "40": 26, "41": 26, "95": 34, "46": 91, "51": 101, "56": 110, "57": 114, "58": 114, "59": 114}, "uri": "base.htm", "source_encoding": "ascii", "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/base.htm"}
+{"source_encoding": "ascii", "line_map": {"65": 108, "71": 108, "77": 99, "16": 4, "18": 0, "83": 99, "89": 34, "101": 95, "31": 2, "32": 4, "33": 5, "37": 5, "38": 17, "39": 26, "40": 26, "41": 26, "95": 34, "46": 91, "51": 101, "56": 110, "57": 114, "58": 114, "59": 114}, "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/base.htm", "uri": "base.htm"}
 __M_END_METADATA
 """
