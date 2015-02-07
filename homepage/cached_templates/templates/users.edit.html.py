@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1423267581.077728
+_modified_time = 1423276277.292198
 _enable_loop = True
 _template_filename = '/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/users.edit.html'
 _template_uri = 'users.edit.html'
@@ -28,10 +28,10 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        form = context.get('form', UNDEFINED)
-        user = context.get('user', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
+        form = context.get('form', UNDEFINED)
+        user = context.get('user', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content'):
@@ -46,10 +46,10 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        form = context.get('form', UNDEFINED)
-        user = context.get('user', UNDEFINED)
         def content():
             return render_content(context)
+        form = context.get('form', UNDEFINED)
+        user = context.get('user', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <div class="content">\n      <h3>This is the Users Page</h3>\n      <h4>Edit Users Page</h4>\n    </div>\n    \n    <form method=\'POST\'>\n        <table>\n            ')
         __M_writer(str( form ))
@@ -63,6 +63,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"uri": "users.edit.html", "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/users.edit.html", "line_map": {"64": 58, "36": 1, "54": 3, "55": 11, "56": 11, "57": 14, "58": 14, "27": 0, "46": 3}, "source_encoding": "ascii"}
+{"uri": "users.edit.html", "line_map": {"64": 58, "36": 1, "54": 3, "55": 11, "56": 11, "57": 14, "58": 14, "27": 0, "46": 3}, "filename": "/Users/kylelonghurst/Dropbox/Development/Python/test_dmp/homepage/templates/users.edit.html", "source_encoding": "ascii"}
 __M_END_METADATA
 """

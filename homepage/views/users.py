@@ -40,6 +40,7 @@ def edit(request):
   	'first_name': user.first_name,
   	'last_name': user.last_name,
   	'email': user.email,
+  	'password': user.password,
   	})
   if request.method == 'POST':
   	form = UserEditForm(request.POST)
@@ -49,6 +50,7 @@ def edit(request):
   		user.first_name = form.cleaned_data['first_name']
   		user.last_name = form.cleaned_data['last_name']
   		user.email = form.cleaned_data['email']
+  		user.set_password(form.cleaned_data['password'])
   		user.save()
   		return HttpResponseRedirect('/homepage/users/')
 
@@ -57,10 +59,11 @@ def edit(request):
   return templater.render_to_response(request, 'users.edit.html', params)  
 
 class UserEditForm(forms.Form):
-	username = forms.CharField()
+	username = forms.CharField(required=True, min_length=1, max_length=100)
 	first_name = forms.CharField(required=True, min_length=1, max_length=100)
 	last_name = forms.CharField(required=True, min_length=1, max_length=100)
 	email = forms.EmailField(required=True, min_length=1, max_length=100)
+	password = forms.CharField(required=True, min_length=1, max_length=100)
 
 	def clean_username(self):
 		if len(self.cleaned_data['username']) < 6:
