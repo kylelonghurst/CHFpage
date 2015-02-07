@@ -41,7 +41,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" rel="home" href="#"><img id="logo" src="/static/homepage/media/CHFlogo.png" /></a>
+            <a class="navbar-brand" rel="home" href="/homepage/index/"><img id="logo" src="/static/homepage/media/CHFlogo.png" /></a>
           </div>
   
   <div class="collapse navbar-collapse">
@@ -75,7 +75,7 @@
     <button type="button" class="btn btn-default navbar-btn">Button</button>
   -->
           <div class="col-sm-4 col-md-4 pull-right">
-              <div class="navbar-text"><a href="#">My Account</a></div>
+              <div class="navbar-text"><a href="/homepage/users/">My Account</a></div>
           <form class="navbar-form" role="search">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
@@ -94,19 +94,6 @@
 
   <div id="wrap">
     <div id="main" class="container clear-top">
-
-    <div class="col-md-2 left-menu">
-      <%block name="sidebar">
-        <h3>Navigation </h3>
-        <ul class="nav nav-pills nav-stacked">
-          <li role="presentation"><a href="index">
-            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-          <li role="presentation"><a href="about">About</a></li>
-          <li role="presentation"><a href="contact">Contact</a></li>
-          <li role="presentation"><a href="terms">Terms</a></li>
-        </ul>
-      </%block>
-    </div>
 
     <div class="col-md-10 center">
       <%block name="content">

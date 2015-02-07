@@ -35,9 +35,9 @@ class User(AbstractUser):
     #def get_short_name(self):
     #def get_session_auth_hash(self):
 
-	address1 = models.TextField(max_length=50)
-	address2 = models.TextField(max_length=50)
-	city = models.TextField(max_length=20)
-	state = models.CharField(max_length=2)
-	zip = models.IntegerField(max_length=5)
+	address1 = models.TextField(max_length=50, blank = True, null = True)
+	address2 = models.TextField(max_length=50, blank = True, null = True)
+	city = models.TextField(max_length=20, blank = True, null = True)
+	state = models.CharField(max_length=2, blank = True, null = True)
+	zip = models.IntegerField(max_length=5, blank = True, null = True)
     
