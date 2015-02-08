@@ -11,21 +11,21 @@ templater = get_renderer('homepage')
 
 
 ############################################################
-#### Gets all of the venues and sends to venues.html.
+#### Gets all of the SaleItems and sends to SaleItems.html.
 
 @view_function
 def process_request(request):
 	params = {}
 
-	venues = hmod.Venue.objects.all()
+	saleitems = hmod.SaleItem.objects.all().order_by('name')
 
-	params['venues'] = venues
+	params['saleitems'] = saleitems
 
-	return templater.render_to_response(request, 'venue.html', params)
+	return templater.render_to_response(request, 'saleitem.html', params)
 
 
 ############################################################
-#### Edits one venue
+#### Edits one SaleItem
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
@@ -33,43 +33,36 @@ def edit(request):
 	params = {}
 
 	try:
-		venue = hmod.Venue.objects.get(id=request.urlparams[0])
-	except hmod.Venue.DoesNotExist:
-		return HttpResponseRedirect('/homepage/venue/')
+		saleitem = hmod.SaleItem.objects.get(id=request.urlparams[0])
+	except hmod.saleitem.DoesNotExist:
+		return HttpResponseRedirect('/homepage/saleitem/')
 
-	form = VenueEditForm(initial={
-		'name': venue.name,
-		'address': venue.address,
-		'city': venue.city,
-		'state': venue.state,
-		'zip': venue.zip,
-		'email': venue.email,
+	form = SaleItemEditForm(initial={
+		'name': saleitem.name,
+		'description': saleitem.description,
+		'low_price': saleitem.low_price,
+		'high_price': saleitem.high_price,
 		})
 	if request.method == 'POST':
-		form = VenueEditForm(request.POST)
-		form.venueid = venue.id
+		form = SaleItemEditForm(request.POST)
+		form.saleitemid = saleitem.id
 		if form.is_valid():
-			venue.name = form.cleaned_data['name']
-			venue.address = form.cleaned_data['address']
-			venue.city = form.cleaned_data['city']
-			venue.state = form.cleaned_data['state']
-			venue.zip = form.cleaned_data['zip']
-			venue.email = form.cleaned_data['email']
-			venue.save()
-			return HttpResponseRedirect('/homepage/venue/')
+			saleitem.name = form.cleaned_data['name']
+			saleitem.description = form.cleaned_data['description']
+			saleitem.low_price = form.cleaned_data['low_price']
+			saleitem.high_price = form.cleaned_data['high_price']
+			saleitem.save()
+			return HttpResponseRedirect('/homepage/saleitem/')
 
 	params['form'] = form
-	params['venue'] = venue
-	return templater.render_to_response(request, 'venue.edit.html', params)  
+	params['saleitem'] = saleitem
+	return templater.render_to_response(request, 'saleitem.edit.html', params)  
 
-class VenueEditForm(forms.Form):
+class SaleItemEditForm(forms.Form):
 	name = forms.CharField(required=True, min_length=1, max_length=100)
-	address = forms.CharField(required=True, min_length=1, max_length=100)
-	city = forms.CharField(required=True, min_length=1, max_length=100)
-	state = forms.CharField(required=True, min_length=1, max_length=100)
-	zip = forms.CharField(min_length=1, max_length=5)
-	email = forms.EmailField(required=True, min_length=1, max_length=100)
-
+	description = forms.CharField(required=True, min_length=1, max_length=100)
+	low_price = forms.DecimalField(required=True, max_digits=10)
+	high_price = forms.DecimalField(required=True, max_digits=10)
 
 	def clean_name(self):
 		if len(self.cleaned_data['name']) < 6:
@@ -77,36 +70,34 @@ class VenueEditForm(forms.Form):
 		return self.cleaned_data['name']
 
 ############################################################
-#### Creates a new Venue
+#### Creates a new saleitem
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
 def create(request):
-	venue = hmod.Venue()
-	venue.name = ''
-	venue.address = ''
-	venue.city = ''
-	venue.state = ''
-	venue.zip = 00000
-	venue.email = ''
-	venue.save()
+	saleitem = hmod.SaleItem()
+	saleitem.name = ''
+	saleitem.description = ''
+	saleitem.low_price = 0.00
+	saleitem.high_price = 0.00
+	saleitem.save()
 
-	return HttpResponseRedirect('/homepage/venue.edit/{}/'.format(venue.id))
+	return HttpResponseRedirect('/homepage/saleitem.edit/{}/'.format(saleitem.id))
 
 ############################################################
-#### Deletes a new Venue
+#### Deletes a new SaleItem
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
 def delete(request):
 	try:
-		venue = hmod.Venue.objects.get(id=request.urlparams[0])
-	except hmod.Venue.DoesNotExist:
-		return HttpResponseRedirect('/homepage/venue/')
+		saleitem = hmod.SaleItem.objects.get(id=request.urlparams[0])
+	except hmod.SaleItem.DoesNotExist:
+		return HttpResponseRedirect('/homepage/saleitem/')
 
-	venue.delete()
+	saleitem.delete()
 
-	return HttpResponseRedirect('/homepage/venue/')
+	return HttpResponseRedirect('/homepage/saleitem/')
 
 
 

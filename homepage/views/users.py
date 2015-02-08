@@ -14,11 +14,11 @@ templater = get_renderer('homepage')
 #### Gets all of the users and sends to users.html.
 
 @view_function
-@permission_required('homepage.Admin', login_url='/homepage/permission/')
+@permission_required('homepage.Manager', login_url='/homepage/permission/')
 def process_request(request):
   params = {}
 
-  users = hmod.User.objects.all()
+  users = hmod.User.objects.all().order_by('first_name')
 
   params['users'] = users
 
@@ -43,7 +43,7 @@ def edit(request):
   	'first_name': user.first_name,
   	'last_name': user.last_name,
   	'email': user.email,
-  	'password': user.password,
+  	#'password': user.password,
   	})
   if request.method == 'POST':
   	form = UserEditForm(request.POST)
@@ -53,7 +53,7 @@ def edit(request):
   		user.first_name = form.cleaned_data['first_name']
   		user.last_name = form.cleaned_data['last_name']
   		user.email = form.cleaned_data['email']
-  		user.set_password(form.cleaned_data['password'])
+  		#user.set_password(form.cleaned_data['password'])
   		user.save()
   		return HttpResponseRedirect('/homepage/users/')
 
@@ -66,7 +66,7 @@ class UserEditForm(forms.Form):
 	first_name = forms.CharField(required=True, min_length=1, max_length=100)
 	last_name = forms.CharField(required=True, min_length=1, max_length=100)
 	email = forms.EmailField(required=True, min_length=1, max_length=100)
-	password = forms.CharField(required=True, min_length=1, max_length=100)
+	#password = forms.CharField(required=True, min_length=1, max_length=100)
 
 	def clean_username(self):
 		if len(self.cleaned_data['username']) < 6:

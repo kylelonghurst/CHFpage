@@ -11,21 +11,21 @@ templater = get_renderer('homepage')
 
 
 ############################################################
-#### Gets all of the venues and sends to venues.html.
+#### Gets all of the areas and sends to areas.html.
 
 @view_function
 def process_request(request):
 	params = {}
 
-	venues = hmod.Venue.objects.all()
+	areas = hmod.Area.objects.all().order_by('name')
 
-	params['venues'] = venues
+	params['areas'] = areas
 
-	return templater.render_to_response(request, 'venue.html', params)
+	return templater.render_to_response(request, 'area.html', params)
 
 
 ############################################################
-#### Edits one venue
+#### Edits one area
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
@@ -33,43 +33,33 @@ def edit(request):
 	params = {}
 
 	try:
-		venue = hmod.Venue.objects.get(id=request.urlparams[0])
-	except hmod.Venue.DoesNotExist:
-		return HttpResponseRedirect('/homepage/venue/')
+		area = hmod.Area.objects.get(id=request.urlparams[0])
+	except hmod.Area.DoesNotExist:
+		return HttpResponseRedirect('/homepage/area/')
 
-	form = VenueEditForm(initial={
-		'name': venue.name,
-		'address': venue.address,
-		'city': venue.city,
-		'state': venue.state,
-		'zip': venue.zip,
-		'email': venue.email,
+	form = AreaEditForm(initial={
+		'name': area.name,
+		'description': area.description,
+		'place_number': area.place_number,
 		})
 	if request.method == 'POST':
-		form = VenueEditForm(request.POST)
-		form.venueid = venue.id
+		form = AreaEditForm(request.POST)
+		form.areaid = area.id
 		if form.is_valid():
-			venue.name = form.cleaned_data['name']
-			venue.address = form.cleaned_data['address']
-			venue.city = form.cleaned_data['city']
-			venue.state = form.cleaned_data['state']
-			venue.zip = form.cleaned_data['zip']
-			venue.email = form.cleaned_data['email']
-			venue.save()
-			return HttpResponseRedirect('/homepage/venue/')
+			area.name = form.cleaned_data['name']
+			area.description = form.cleaned_data['description']
+			area.place_number = form.cleaned_data['place_number']
+			area.save()
+			return HttpResponseRedirect('/homepage/area/')
 
 	params['form'] = form
-	params['venue'] = venue
-	return templater.render_to_response(request, 'venue.edit.html', params)  
+	params['area'] = area
+	return templater.render_to_response(request, 'area.edit.html', params)  
 
-class VenueEditForm(forms.Form):
+class AreaEditForm(forms.Form):
 	name = forms.CharField(required=True, min_length=1, max_length=100)
-	address = forms.CharField(required=True, min_length=1, max_length=100)
-	city = forms.CharField(required=True, min_length=1, max_length=100)
-	state = forms.CharField(required=True, min_length=1, max_length=100)
-	zip = forms.CharField(min_length=1, max_length=5)
-	email = forms.EmailField(required=True, min_length=1, max_length=100)
-
+	description = forms.CharField(required=True, min_length=1, max_length=100)
+	place_number = forms.IntegerField(required=True)
 
 	def clean_name(self):
 		if len(self.cleaned_data['name']) < 6:
@@ -77,36 +67,33 @@ class VenueEditForm(forms.Form):
 		return self.cleaned_data['name']
 
 ############################################################
-#### Creates a new Venue
+#### Creates a new area
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
 def create(request):
-	venue = hmod.Venue()
-	venue.name = ''
-	venue.address = ''
-	venue.city = ''
-	venue.state = ''
-	venue.zip = 00000
-	venue.email = ''
-	venue.save()
+	area = hmod.Area()
+	area.name = ''
+	area.description = ''
+	area.place_number = 0
+	area.save()
 
-	return HttpResponseRedirect('/homepage/venue.edit/{}/'.format(venue.id))
+	return HttpResponseRedirect('/homepage/area.edit/{}/'.format(area.id))
 
 ############################################################
-#### Deletes a new Venue
+#### Deletes a new area
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
 def delete(request):
 	try:
-		venue = hmod.Venue.objects.get(id=request.urlparams[0])
-	except hmod.Venue.DoesNotExist:
-		return HttpResponseRedirect('/homepage/venue/')
+		area = hmod.Area.objects.get(id=request.urlparams[0])
+	except hmod.Area.DoesNotExist:
+		return HttpResponseRedirect('/homepage/area/')
 
-	venue.delete()
+	area.delete()
 
-	return HttpResponseRedirect('/homepage/venue/')
+	return HttpResponseRedirect('/homepage/area/')
 
 
 

@@ -17,7 +17,7 @@ templater = get_renderer('homepage')
 def process_request(request):
 	params = {}
 
-	photographs = hmod.Photograph.objects.all()
+	photographs = hmod.Photograph.objects.all().order_by('image')
 
 	params['photographs'] = photographs
 

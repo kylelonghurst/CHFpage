@@ -11,21 +11,21 @@ templater = get_renderer('homepage')
 
 
 ############################################################
-#### Gets all of the venues and sends to venues.html.
+#### Gets all of the inventory and sends to inventory.html.
 
 @view_function
 def process_request(request):
 	params = {}
 
-	venues = hmod.Venue.objects.all()
+	inventories = hmod.Inventory.objects.all().order_by('name')
 
-	params['venues'] = venues
+	params['inventories'] = inventories
 
-	return templater.render_to_response(request, 'venue.html', params)
+	return templater.render_to_response(request, 'inventory.html', params)
 
 
 ############################################################
-#### Edits one venue
+#### Edits one inventory
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
@@ -33,43 +33,33 @@ def edit(request):
 	params = {}
 
 	try:
-		venue = hmod.Venue.objects.get(id=request.urlparams[0])
-	except hmod.Venue.DoesNotExist:
-		return HttpResponseRedirect('/homepage/venue/')
+		inventory = hmod.Inventory.objects.get(id=request.urlparams[0])
+	except hmod.Inventory.DoesNotExist:
+		return HttpResponseRedirect('/homepage/inventory/')
 
-	form = VenueEditForm(initial={
-		'name': venue.name,
-		'address': venue.address,
-		'city': venue.city,
-		'state': venue.state,
-		'zip': venue.zip,
-		'email': venue.email,
+	form = InventoryEditForm(initial={
+		'name': inventory.name,
+		'description': inventory.description,
+		'value': inventory.value,
 		})
 	if request.method == 'POST':
-		form = VenueEditForm(request.POST)
-		form.venueid = venue.id
+		form = InventoryEditForm(request.POST)
+		form.inventoryid = inventory.id
 		if form.is_valid():
-			venue.name = form.cleaned_data['name']
-			venue.address = form.cleaned_data['address']
-			venue.city = form.cleaned_data['city']
-			venue.state = form.cleaned_data['state']
-			venue.zip = form.cleaned_data['zip']
-			venue.email = form.cleaned_data['email']
-			venue.save()
-			return HttpResponseRedirect('/homepage/venue/')
+			inventory.name = form.cleaned_data['name']
+			inventory.description = form.cleaned_data['description']
+			inventory.value = form.cleaned_data['value']
+			inventory.save()
+			return HttpResponseRedirect('/homepage/inventory/')
 
 	params['form'] = form
-	params['venue'] = venue
-	return templater.render_to_response(request, 'venue.edit.html', params)  
+	params['inventory'] = inventory
+	return templater.render_to_response(request, 'inventory.edit.html', params)  
 
-class VenueEditForm(forms.Form):
+class InventoryEditForm(forms.Form):
 	name = forms.CharField(required=True, min_length=1, max_length=100)
-	address = forms.CharField(required=True, min_length=1, max_length=100)
-	city = forms.CharField(required=True, min_length=1, max_length=100)
-	state = forms.CharField(required=True, min_length=1, max_length=100)
-	zip = forms.CharField(min_length=1, max_length=5)
-	email = forms.EmailField(required=True, min_length=1, max_length=100)
-
+	description = forms.CharField(required=True, min_length=1, max_length=100)
+	value = forms.DecimalField(required=True, max_digits=10)
 
 	def clean_name(self):
 		if len(self.cleaned_data['name']) < 6:
@@ -77,36 +67,33 @@ class VenueEditForm(forms.Form):
 		return self.cleaned_data['name']
 
 ############################################################
-#### Creates a new Venue
+#### Creates a new inventory
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
 def create(request):
-	venue = hmod.Venue()
-	venue.name = ''
-	venue.address = ''
-	venue.city = ''
-	venue.state = ''
-	venue.zip = 00000
-	venue.email = ''
-	venue.save()
+	inventory = hmod.Inventory()
+	inventory.name = ''
+	inventory.description = ''
+	inventory.value = 00.00
+	inventory.save()
 
-	return HttpResponseRedirect('/homepage/venue.edit/{}/'.format(venue.id))
+	return HttpResponseRedirect('/homepage/inventory.edit/{}/'.format(inventory.id))
 
 ############################################################
-#### Deletes a new Venue
+#### Deletes a new inventory
 
 @view_function
 @permission_required('homepage.Manager', login_url='/homepage/permission/')
 def delete(request):
 	try:
-		venue = hmod.Venue.objects.get(id=request.urlparams[0])
-	except hmod.Venue.DoesNotExist:
-		return HttpResponseRedirect('/homepage/venue/')
+		inventory = hmod.Inventory.objects.get(id=request.urlparams[0])
+	except hmod.Inventory.DoesNotExist:
+		return HttpResponseRedirect('/homepage/inventory/')
 
-	venue.delete()
+	inventory.delete()
 
-	return HttpResponseRedirect('/homepage/venue/')
+	return HttpResponseRedirect('/homepage/inventory/')
 
 
 

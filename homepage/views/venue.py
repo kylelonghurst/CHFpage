@@ -17,7 +17,7 @@ templater = get_renderer('homepage')
 def process_request(request):
 	params = {}
 
-	venues = hmod.Venue.objects.all()
+	venues = hmod.Venue.objects.all().order_by('name')
 
 	params['venues'] = venues
 

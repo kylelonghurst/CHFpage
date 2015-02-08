@@ -2,34 +2,30 @@
 
 <%block name="content">
     <div class="content">
-      <h3>This is the Venue Page</h3>
-      <h4>Venue Page</h4>
+      <h3>This is the Saleitem Page</h3>
+      <h4>Saleitem Page</h4>
     </div>
 
     <div class="text-right">
-    	<a href="/homepage/venue.create/" class="btn btn-warning">Create New Venue</a>
+    	<a href="/homepage/saleitem.create/" class="btn btn-warning">Create New Sale Item</a>
     </div>
-    <table id="venues_table" class="table table-striped table-bordered">
+    <table id="saleitems_table" class="table table-striped table-bordered">
     	<tr>
     		<th>ID</th>
     		<th>Name</th>
-    		<th>Address</th>
-    		<th>City</th>
-    		<th>State</th>
-    		<th>ZIP</th>
-            <th>Email</th>
+    		<th>Description</th>
+    		<th>Low Price</th>
+    		<th>High Price</th>
             <th>Actions</th>
-	    %for venue in venues:
+	    %for saleitem in saleitems:
 	    	<tr>
-	    		<td>${ venue.id }</td>
-	    		<td>${ venue.name }</td>
-	    		<td>${ venue.address }</td>
-	    		<td>${ venue.city }</td>
-	    		<td>${ venue.state }</td>
-                <td>${ venue.zip }</td>
-                <td>${ venue.email }</td>
+	    		<td>${ saleitem.id }</td>
+	    		<td>${ saleitem.name }</td>
+	    		<td>${ saleitem.description }</td>
+	    		<td>${ saleitem.low_price }</td>
+	    		<td>${ saleitem.high_price }</td>
 	    		<td>
-	    			<a href="/homepage/venue.edit/${ venue.id }/" class="btn btn-xs btn-primary">edit</a>
+	    			<a href="/homepage/saleitem.edit/${ saleitem.id }/" class="btn btn-xs btn-primary">edit</a>
 	    		</td>
 	    	</tr>
 	    %endfor

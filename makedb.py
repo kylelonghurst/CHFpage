@@ -19,19 +19,19 @@ user1.address = '1234 N. Street'
 user1.save()
 
 user2 = hmod.User()
-user2.username = 'donduck'
-user2.set_password('donduck')
-user2.first_name = 'Donald'
-user2.last_name = 'Duck'
+user2.username = 'tredding'
+user2.set_password('tredding')
+user2.first_name = 'Taylor'
+user2.last_name = 'Redding'
 user2.address = '123 N. Street'
 user2.save()
 
 user3 = hmod.User()
-user3.username = 'hpotter'
-user3.set_password('hpotter')
-user3.first_name = 'Harry'
-user3.last_name = 'Potter'
-user3.address = '123 N. Street'
+user3.username = 'jlakenan'
+user3.set_password('jlakenan')
+user3.first_name = 'Joshua'
+user3.last_name = 'Lakenan'
+user3.address = '123 the hood'
 user3.save()
 
 #Venue
@@ -100,6 +100,10 @@ group1.save()
 group1.permissions.add(permission1)
 permission = Permission.objects.get(id=34)
 group1.permissions.add(permission)
+permission = Permission.objects.get(id=35)
+group1.permissions.add(permission)
+permission = Permission.objects.get(id=36)
+group1.permissions.add(permission)
 
 group2 = Group()
 group2.name = 'Manager'
@@ -107,13 +111,15 @@ group2.save()
 group2.permissions.add(permission2)
 permission = Permission.objects.get(id=35)
 group2.permissions.add(permission)
+permission = Permission.objects.get(id=36)
+group2.permissions.add(permission)
 
 group3 = Group()
 group3.name = 'Guest'
 group3.save()
 group3.permissions.add(permission3)
 permission = Permission.objects.get(id=36)
-group2.permissions.add(permission)
+group3.permissions.add(permission)
 
 #Assigning Users to Groups
 user = hmod.User.objects.get(id=1)
